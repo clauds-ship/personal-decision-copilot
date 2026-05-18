@@ -1,62 +1,131 @@
 def build_daily_prompt(data):
 
     return f"""
-    You are an intelligent personal planning assistant.
+            You are an intelligent personal planning assistant.
 
-    The user has:
-    - Energy level: {data.energy_level}
-    - Available hours tonight: {data.available_hours}
-    - Current priorities: {data.priorities}
+            The user has:
+            - Energy level: {data.energy_level}
+            - Available hours tonight: {data.available_hours}
+            - Current priorities: {data.priorities}
 
-    Generate:
-    1. An optimized evening plan
-    2. Recommended ordering of activities
-    3. Reasoning behind tradeoffs
-    4. Suggestions to avoid burnout
+            Return ONLY valid JSON:
 
-    Keep recommendations realistic and actionable.
-    """
+            {{
+                "schedule": [],
+                "reasoning": "",
+                "burnout_risk": "",
+                "burnout_score": "",
+                "energy_alignment": ""
+            }}
+
+            Explain:
+            - why recommendations were chosen
+            - prioritization tradeoffs
+            - how energy levels influenced planning
+
+            Keep recommendations realistic.
+            
+            If the user has:
+            - low energy
+            - low sleep
+            - excessive priorities
+
+            then:
+            - reduce workload intensity
+            - prioritize recovery
+            - explain why
+
+            Avoid over-optimization.
+            """
 
 def build_morning_prompt(data):
-
     return f"""
-    The user slept {data.sleep_hours} hours.
+        You are an intelligent personal planning assistant, planning for this morning.
 
-    They have {data.available_minutes} minutes available.
+        The user has:
+        - Hours slept: {data.sleep_hours}
+        - Available minutes this morning: {data.available_minutes}
+        - Desired workout intensity: {data.intensity}
 
-    Desired workout intensity:
-    {data.intensity}
+        Generate:
+        - ideal morning flow
+        - workout recommendation
+        - prep efficiency suggestions
+        - energy optimization suggestions
+        - simple breakfast ideas that are protein-rich
 
-    Generate:
-    - ideal morning flow
-    - workout recommendation
-    - prep efficiency suggestions
-    - energy optimization suggestions
-    - simple breakfast ideas that are protein-rich
+        Return ONLY valid JSON:
 
-    Be practical and concise.
-    """
+        {{
+            "schedule": [],
+            "reasoning": "",
+            "burnout_risk": "",
+            "burnout_score": "",
+            "energy_alignment": ""
+        }}
+
+        Explain:
+        - why recommendations were chosen
+        - prioritization tradeoffs
+        - how energy levels influenced planning
+
+        Keep recommendations realistic.
+
+        If the user has:
+        - low energy
+        - low sleep
+        - excessive priorities
+
+        then:
+        - reduce workload intensity
+        - prioritize recovery
+        - explain why
+
+        Avoid over-optimization.
+        """
 
 def build_weekend_prompt(data):
-
     return f"""
-    The user wants weekend recommendations.
+        You are an intelligent personal planning assistant, planning for the weekend.
 
-    Social energy:
-    {data.social_energy}
+        The user has:
+        - Social energy: {data.social_energy}
+        - Budget: {data.budget}
+        - Weather preferences: {data.weather_preference}
 
-    Budget:
-    {data.budget}
+        Balance:
+        - rest
+        - activity
+        - socializing
+        - recovery
+        - enjoyment
 
-    Weather preference:
-    {data.weather_preference}
+        Return ONLY valid JSON:
 
-    Balance:
-    - rest
-    - activity
-    - socializing
-    - recovery
-    - enjoyment
+        {{
+            "schedule": [],
+            "reasoning": "",
+            "burnout_risk": "",
+            "burnout_score": "",
+            "energy_alignment": ""
+        }}
 
-    Generate a thoughtful weekend recommendation plan.
-    """
+        Explain:
+        - why recommendations were chosen
+        - prioritization tradeoffs
+        - how energy levels influenced planning
+
+        Keep recommendations realistic.
+
+        If the user has:
+            - low energy
+            - low sleep
+            - excessive priorities
+
+            then:
+            - reduce workload intensity
+            - prioritize recovery
+            - explain why
+
+            Avoid over-optimization.
+        """

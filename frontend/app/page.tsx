@@ -194,8 +194,12 @@ export default function Home() {
         Generate Plan
       </button>
 
-      <div className="mt-8 whitespace-pre-wrap border p-4 rounded">
-        {response}
+      <div className="mt-8 border p-4 rounded">
+
+        <pre className="whitespace-pre-wrap">
+          {response}
+        </pre>
+
       </div>
 
     </main>

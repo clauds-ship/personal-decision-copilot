@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from json_repair import repair_json
 
 from anthropic import Anthropic
 from dotenv import load_dotenv
@@ -9,6 +10,7 @@ import json
 
 from models import *
 from prompts import *
+from memory import *
 
 load_dotenv()
 
@@ -39,11 +41,16 @@ def ask_claude(prompt):
     try:
         response = client.messages.create(
             model="claude-sonnet-4-6",
-            max_tokens=700,
+            max_tokens=400,
             messages=[
                 {
                     "role": "user",
-                    "content": prompt
+                    "content": [
+                        {
+                            "type": "text",
+                            "text": prompt
+                        }
+                    ]
                 }
             ]
         )
@@ -66,10 +73,21 @@ def daily_plan(data: DailyPlanRequest):
     prompt = build_daily_prompt(data)
 
     response = ask_claude(prompt)
+    response = response.replace("```json", "").replace("```", "").strip()
+    parsed = json.loads(repair_json(response))
 
-    return {
-        "plan": response
-    }
+    db = SessionLocal()
+
+    new_recommendation = Recommendation(
+        plan_type="daily",
+        recommendation=response
+    )
+
+    db.add(new_recommendation)
+    db.commit()
+    db.close()
+
+    return parsed
 
 @app.post("/morning-plan")
 def morning_plan(data: MorningRequest):
@@ -77,10 +95,21 @@ def morning_plan(data: MorningRequest):
     prompt = build_morning_prompt(data)
 
     response = ask_claude(prompt)
+    response = response.replace("```json", "").replace("```", "").strip()
+    parsed = json.loads(repair_json(response))
 
-    return {
-        "plan": response
-    }
+    db = SessionLocal()
+
+    new_recommendation = Recommendation(
+        plan_type="morning",
+        recommendation=response
+    )
+
+    db.add(new_recommendation)
+    db.commit()
+    db.close()
+
+    return parsed
 
 @app.post("/weekend-plan")
 def weekend_plan(data: WeekendRequest):
@@ -88,7 +117,18 @@ def weekend_plan(data: WeekendRequest):
     prompt = build_weekend_prompt(data)
 
     response = ask_claude(prompt)
+    response = response.replace("```json", "").replace("```", "").strip()
+    parsed = json.loads(repair_json(response))
 
-    return {
-        "plan": response
-    }
+    db = SessionLocal()
+
+    new_recommendation = Recommendation(
+        plan_type="weekend",
+        recommendation=response
+    )
+
+    db.add(new_recommendation)
+    db.commit()
+    db.close()
+
+    return parsed
