@@ -1,6 +1,6 @@
-** Personal Decision Copilot **
+**Personal Decision Copilot**
 
-** Features **
+**Features**
 1. Daily Planning Assistant
 Input:
 - calendar
@@ -32,7 +32,7 @@ Input:
 Output:
 - weekend activities that balance rest, exercise, socializing, hobbies
 
-** Tech stack **
+**Tech stack**
 
 Frontend
 - Next.js + Vercel
