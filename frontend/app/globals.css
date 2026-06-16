@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f6f3ee;
+  --foreground: #1f2933;
 }
 
 @theme inline {
@@ -12,15 +12,223 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+.mode-button {
+  align-items: center;
+  border: 1px solid #ded7cc;
+  border-radius: 8px;
+  color: #27323a;
+  display: flex;
+  justify-content: space-between;
+  min-height: 76px;
+  padding: 14px 16px;
+  text-align: left;
+  transition:
+    background 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+  width: 100%;
+}
+
+.mode-button:hover {
+  background: #f3eee6;
+  border-color: #c7bba8;
+}
+
+.mode-button-active {
+  background: #e8f0ed;
+  border-color: #91aba1;
+  box-shadow: 0 10px 24px rgba(43, 86, 72, 0.1);
+}
+
+.mode-dot {
+  background: #d0d7d4;
+  border-radius: 999px;
+  display: block;
+  height: 12px;
+  margin-left: 16px;
+  width: 12px;
+}
+
+.mode-button-active .mode-dot {
+  background: #2f6f5f;
+}
+
+.field {
+  display: grid;
+  gap: 8px;
+}
+
+.field span {
+  color: #39464f;
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.field input,
+.field select,
+.field textarea {
+  background: #fbfcfc;
+  border: 1px solid #cfd6dc;
+  border-radius: 8px;
+  color: #172026;
+  min-height: 48px;
+  outline: none;
+  padding: 11px 12px;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    background 160ms ease;
+  width: 100%;
+}
+
+.field select {
+  appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, #4b5963 50%),
+    linear-gradient(135deg, #4b5963 50%, transparent 50%);
+  background-position:
+    calc(100% - 18px) 20px,
+    calc(100% - 13px) 20px;
+  background-repeat: no-repeat;
+  background-size:
+    5px 5px,
+    5px 5px;
+  padding-right: 38px;
+}
+
+.field textarea {
+  min-height: 118px;
+  resize: vertical;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  background: #ffffff;
+  border-color: #2f6f5f;
+  box-shadow: 0 0 0 3px rgba(47, 111, 95, 0.14);
+}
+
+.primary-action {
+  background: #172026;
+  border-radius: 8px;
+  color: #ffffff;
+  font-weight: 700;
+  margin-top: 24px;
+  min-height: 50px;
+  padding: 0 18px;
+  transition:
+    background 160ms ease,
+    opacity 160ms ease,
+    transform 160ms ease;
+  width: 100%;
+}
+
+.primary-action:hover {
+  background: #2f6f5f;
+}
+
+.primary-action:disabled {
+  cursor: wait;
+  opacity: 0.72;
+}
+
+.result-panel {
+  background: #f7f9f8;
+  border: 1px solid #dbe2e0;
+  border-radius: 8px;
+  margin-top: 24px;
+  min-height: 178px;
+  padding: 20px;
+}
+
+.result-panel h3 {
+  color: #172026;
+  font-size: 1rem;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+.empty-state,
+.error-state {
+  color: #65727d;
+  line-height: 1.6;
+}
+
+.error-state {
+  color: #9f392f;
+  font-weight: 700;
+}
+
+.schedule-list {
+  color: #39464f;
+  display: grid;
+  gap: 10px;
+  list-style-position: inside;
+}
+
+.schedule-list li {
+  background: #ffffff;
+  border: 1px solid #dde4e1;
+  border-radius: 8px;
+  line-height: 1.55;
+  padding: 12px;
+}
+
+.insight-grid {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.insight-grid div {
+  background: #fffaf1;
+  border: 1px solid #eadfc8;
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.insight-grid span {
+  color: #746957;
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 800;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+.insight-grid strong {
+  color: #172026;
+  display: block;
+  font-size: 0.95rem;
+  line-height: 1.35;
+}
+
+.reasoning {
+  color: #4d5a64;
+  line-height: 1.65;
+}
+
+@media (max-width: 760px) {
+  .insight-grid {
+    grid-template-columns: 1fr;
+  }
 }
